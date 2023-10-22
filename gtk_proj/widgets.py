@@ -20,7 +20,7 @@ class Window(Gtk.ApplicationWindow):
         self.ax = self.fig.add_subplot()
         self.line = None
 
-        color = (0.9, 0.9, 0.9)
+        color = (0.96, 0.96, 0.96)
         self.fig.set_facecolor(color)
         self.ax.set_facecolor(color)
 
@@ -30,11 +30,12 @@ class Window(Gtk.ApplicationWindow):
         self.set_child(sw)
         self.ani = None
 
+        hb = Gtk.HeaderBar()
+        hb.set_show_title_buttons(True)
+        self.set_titlebar(hb)
+
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, )
         sw.set_child(vbox)
-
-        box = Gtk.Box(spacing=5)
-        vbox.append(box)
 
         button_add_point = Gtk.Button()
         button_add_point.set_label("Добавить")
@@ -58,9 +59,11 @@ class Window(Gtk.ApplicationWindow):
         button_quit.set_label("Выйти")
         button_quit.connect('clicked', lambda x: app.quit())
 
-        controls = (button_add_point, self.edit_x, self.edit_y, button_quit, button_show_anim)
-        for c in controls:
-            box.append(c)
+        hb.pack_start(button_add_point)
+        hb.pack_start(self.edit_x)
+        hb.pack_start(self.edit_y)
+        hb.pack_start(button_quit)
+        hb.pack_end(button_show_anim)
 
         self.canvas = FigureCanvas(self.fig)
         self.canvas.set_size_request(800, 600)
