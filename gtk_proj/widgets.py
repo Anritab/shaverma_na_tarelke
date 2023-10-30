@@ -30,8 +30,7 @@ class Window(Gtk.ApplicationWindow):
         tab_label.set_text("График")
         self.notebook.append_page(intro, tab_label)
 
-        tab_label = Gtk.Label()
-        tab_label.set_text("ДжоДжойсон")
+
 
         self.is_anim_active = False
 
@@ -104,7 +103,7 @@ class Window(Gtk.ApplicationWindow):
 
         list_tab = Gtk.ScrolledWindow()
         tab_label = Gtk.Label()
-        tab_label.set_text("Список")
+        tab_label.set_text("ДжоДжойсон")
         self.notebook.append_page(list_tab, tab_label)
         self.notebook.set_current_page(curr_page)
 
