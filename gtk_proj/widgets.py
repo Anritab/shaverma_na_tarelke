@@ -31,7 +31,7 @@ class Window(Gtk.ApplicationWindow):
         self.notebook.append_page(intro, tab_label)
 
         tab_label = Gtk.Label()
-        tab_label.set_text("Список")
+        tab_label.set_text("ДжоДжойсон")
 
         self.is_anim_active = False
 
