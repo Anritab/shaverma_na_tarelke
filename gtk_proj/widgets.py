@@ -5,14 +5,33 @@ from matplotlib.backends.backend_gtk4agg import \
 from matplotlib.figure import Figure
 import matplotlib.animation as animation
 import numpy as np
-
+from .jsonshower import view
 from .model import PlotData
 
+class Notebook(Gtk.Notebook):
+    pass
+
+class Confirm(Gtk.MessageDialog):
+    def __init__(self):
+        Gtk.MessageDialog.__init__(self)
+        self.set_markup('are u sure about it?')
+        self.add_button('YES YES YES', 1)
+        self.add_button('NO!!!!!!!!!', 0)
 
 class Window(Gtk.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         Gtk.ApplicationWindow.__init__(self, *args, **kwargs)
         app = kwargs['application']
+
+        self.notebook = Notebook()
+
+        intro = Gtk.ScrolledWindow()
+        tab_label = Gtk.Label()
+        tab_label.set_text("График")
+        self.notebook.append_page(intro, tab_label)
+
+        tab_label = Gtk.Label()
+        tab_label.set_text("Список")
 
         self.is_anim_active = False
 
@@ -20,21 +39,23 @@ class Window(Gtk.ApplicationWindow):
         self.ax = self.fig.add_subplot()
         self.line = None
 
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        intro.set_child(vbox)
+
         color = (0.96, 0.96, 0.96)
         self.fig.set_facecolor(color)
         self.ax.set_facecolor(color)
 
-        sw = Gtk.ScrolledWindow(margin_top=10, margin_bottom=10,
-                                margin_start=10, margin_end=10)
+        sw = Gtk.ScrolledWindow(margin_top=10, margin_bottom=10, margin_start=10, margin_end=10)
+        vbox.append(sw)
 
-        self.set_child(sw)
         self.ani = None
 
         hb = Gtk.HeaderBar()
         hb.set_show_title_buttons(True)
         self.set_titlebar(hb)
 
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, )
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         sw.set_child(vbox)
 
         button_add_point = Gtk.Button()
@@ -55,19 +76,39 @@ class Window(Gtk.ApplicationWindow):
         for edit in {self.edit_x, self.edit_y}:
             edit.set_adjustment(Gtk.Adjustment(upper=100, step_increment=1, page_increment=10))
 
-        button_quit = Gtk.Button()
-        button_quit.set_label("Выйти")
-        button_quit.connect('clicked', lambda x: app.quit())
 
         hb.pack_start(button_add_point)
         hb.pack_start(self.edit_x)
         hb.pack_start(self.edit_y)
-        hb.pack_start(button_quit)
         hb.pack_end(button_show_anim)
 
         self.canvas = FigureCanvas(self.fig)
         self.canvas.set_size_request(800, 600)
+        self.app = kwargs['application']
         vbox.append(self.canvas)
+
+        view.show()
+
+        curr_page = 0
+
+
+        with open("cache.toml", "r") as f:
+            curr_page = int(*f)
+
+        self.set_child(self.notebook)
+        self.show()
+
+        self.app = kwargs['application']
+
+        self.connect('close-request', self.exitool)
+
+        list_tab = Gtk.ScrolledWindow()
+        tab_label = Gtk.Label()
+        tab_label.set_text("Список")
+        self.notebook.append_page(list_tab, tab_label)
+        self.notebook.set_current_page(curr_page)
+
+        list_tab.set_child(view)
 
     def add_point(self, *args, **kwargs):
 
@@ -120,3 +161,18 @@ class Window(Gtk.ApplicationWindow):
             self.add_point(last_x, last_y)
 
             self.canvas.draw()
+
+    def exitool(self, _):
+        confirm = Confirm()
+        confirm.set_transient_for(self)
+        confirm.show()
+        confirm.connect('response', self.exit)
+        return True
+
+    def exit(self, widget, response):
+        with open("cache.toml", "w") as f:
+            f.write(str(self.notebook.get_current_page()))
+
+        if response == 1:
+            self.app.quit()
+        widget.destroy()

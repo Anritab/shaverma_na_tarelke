@@ -1,0 +1,65 @@
+{
+  "Jotaro Kujo": {
+    "stand": {
+      "name": "Star Platinum",
+      "ability": "Precise and powerful punches"
+    },
+    "allies": ["Joseph Joestar", "Noriaki Kakyoin", "Jean Pierre Polnareff"]
+  },
+  "Joseph Joestar": {
+    "stand": {
+      "name": "Hermit Purple",
+      "ability": "Photography and divination"
+    },
+    "allies": ["Jotaro Kujo", "Muhammad Avdol", "Jean Pierre Polnareff"]
+  },
+  "Muhammad Avdol": {
+    "stand": {
+      "name": "Magician's Red",
+      "ability": "Fire manipulation"
+    },
+    "allies": ["Jotaro Kujo", "Joseph Joestar", "Jean Pierre Polnareff"]
+  },
+  "Noriaki Kakyoin": {
+    "stand": {
+      "name": "Hierophant Green",
+      "ability": "Emerald Splash and long-range attacks"
+    },
+    "allies": ["Jotaro Kujo", "Joseph Joestar", "Jean Pierre Polnareff"]
+  },
+  "Jean Pierre Polnareff": {
+    "stand": {
+      "name": "Silver Chariot",
+      "ability": "Swordsmanship and speed"
+    },
+    "allies": ["Jotaro Kujo", "Joseph Joestar", "Noriaki Kakyoin"]
+  },
+  "Iggy": {
+    "stand": {
+      "name": "The Fool",
+      "ability": "Sand manipulation and flight"
+    },
+    "allies": ["Jotaro Kujo", "Joseph Joestar", "Noriaki Kakyoin"]
+  },
+  "Dio Brando": {
+    "stand": {
+      "name": "The World",
+      "ability": "Time stop"
+    },
+    "enemies": ["Jotaro Kujo", "Joseph Joestar", "Muhammad Avdol"]
+  },
+  "Enrico Pucci": {
+    "stand": {
+      "name": "Whitesnake",
+      "ability": "Memory manipulation and disc creation"
+    },
+    "enemies": ["Jotaro Kujo", "Jolyne Cujoh"]
+  },
+  "Yoshikage Kira": {
+    "stand": {
+      "name": "Killer Queen",
+      "ability": "Explosions"
+    },
+    "enemies": ["Josuke Higashikata", "Jotaro Kujo"]
+  }
+}
