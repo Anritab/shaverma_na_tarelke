@@ -90,9 +90,11 @@ class Window(Gtk.ApplicationWindow):
 
         curr_page = 0
 
-
-        with open("cache.toml", "r") as f:
-            curr_page = int(*f)
+        try:
+            with open("cache.toml", "r") as f:
+                curr_page = int(*f)
+        except:
+            pass
 
         self.set_child(self.notebook)
         self.show()
